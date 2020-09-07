@@ -1,7 +1,11 @@
+const express = require('express')
 const puppeteer = require("puppeteer");
+const PORT = process.env.PORT || 5000
+const app = express();
 
-async function main() {
-  const browser = await puppeteer.launch({
+
+app.get('/',async function(req, res) {
+    const browser = await puppeteer.launch({
     headless: true,
     args: ["--no-sandbox"]
   });
@@ -10,6 +14,6 @@ async function main() {
   console.log(text);
   console.log("done");
   browser.close();
-}
-
-main();
+	res.json({ message: text });
+});
+app.listen(PORT);
